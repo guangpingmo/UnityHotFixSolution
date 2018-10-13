@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using XLua;
 
 namespace HotFixSolution
 {
+    [LuaCallCSharp]
     public static class ABManager
     {
         public static Dictionary<String, ABItem> configs = new Dictionary<string, ABItem>();
