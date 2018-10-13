@@ -54,6 +54,10 @@ namespace HotFixSolution
             BuildPipeline.BuildAssetBundles(outputPath, BuildAssetBundleOptions.UncompressedAssetBundle, EditorUserBuildSettings.activeBuildTarget);
             Application.OpenURL("file:///" + Path.GetFullPath(outputPath));
             BuildAssetBundlesXMLManifest(outputPath);
+            string zipFile = Path.Combine(Path.GetDirectoryName(outputPath), currentDateDesc + ".zip");
+            FileUtils.CreateZipFile(zipFile, outputPath);
+            Debug.LogFormat("Zip Folder:{0} To ZipFile:{1}", outputPath, zipFile);
+            //FileUtils.ExtractZipFile(zipFile, outputPath+"-unzip");
         }
 
         private static void BuildAssetBundlesXMLManifest(string rootPath)
