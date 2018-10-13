@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 19348776}
   - component: {fileID: 19348775}
   m_Layer: 5
-  m_Name: Button
+  m_Name: RefreshDateButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,7 +826,7 @@ GameObject:
   - component: {fileID: 1609912661}
   - component: {fileID: 1609912660}
   m_Layer: 5
-  m_Name: Date
+  m_Name: DateText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5,6 +5,7 @@ using UnityEditor;
 using System.IO;
 using System.Linq;
 using System;
+using CSObjectWrapEditor;
 
 namespace HotFixSolution
 {
@@ -43,6 +44,10 @@ namespace HotFixSolution
         [MenuItem("BuildAssetBundlesEditor/BuildAllAssetBundles")]
         public static void BuildAllAssetBundles()
         {
+            Generator.ClearAll();
+            Generator.GenAll();
+            ClearAllAssetBundlesName();
+            MarkAllAssetBundles();
             string currentDateDesc = DateTime.Now.ToString("yyyyMMdd-HHmmss");
             String outputPath = CombinePath("Build", "AssetBundles", EditorUserBuildSettings.activeBuildTarget.ToString(), currentDateDesc);
             Directory.CreateDirectory(outputPath);
@@ -53,8 +58,6 @@ namespace HotFixSolution
 
         private static void BuildAssetBundlesXMLManifest(string rootPath)
         {
-            ClearAllAssetBundlesName();
-            MarkAllAssetBundles();
             ABManifest manifest = new ABManifest();
             foreach(var abName in AssetDatabase.GetAllAssetBundleNames())
             {

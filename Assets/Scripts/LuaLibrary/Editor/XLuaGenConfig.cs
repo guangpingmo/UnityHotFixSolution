@@ -37,10 +37,14 @@ public static class XLuaGenConfig
         }
     }
 
+    [DoNotGen]
+    public static Dictionary<Type, List<string>> DontGenMember = new Dictionary<Type, List<string>>  {
+        {typeof(UnityEngine.MonoBehaviour), new List<string>(){"runInEditMode"}},
+    };
+
     [BlackList]
     public static List<List<string>> BlackList = new List<List<string>>()  {
-        new List<string>(){"UnityEngine.MonoBehaviour", "runInEditMode'"},
+        //new List<string>(){"UnityEngine.MonoBehaviour", "runInEditMode"},
         new List<string>(){"UnityEngine.UI.Text", "OnRebuildRequested"},
-};
-
+    };
 }
