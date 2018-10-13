@@ -8,6 +8,16 @@ namespace HotFixSolution
 {
     public static class FileUtils
     {
+        public static string CombinePath(params string[] pathComponent)
+        {
+            string dstPath = pathComponent[0];
+            for (int i = 1; i < pathComponent.Length; i++)
+            {
+                dstPath = Path.Combine(dstPath, pathComponent[i]);
+            }
+            return dstPath;
+        }
+
         public static string GetMD5HashFromFile(string fileName)
         {
             using (var md5 = MD5.Create())

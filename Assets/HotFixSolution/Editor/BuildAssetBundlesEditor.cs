@@ -31,16 +31,6 @@ namespace HotFixSolution
             }
         }
 
-        private static string CombinePath(params string[] pathComponent)
-        {
-            string dstPath = pathComponent[0];
-            for (int i = 1; i < pathComponent.Length; i++)
-            {
-                dstPath = Path.Combine(dstPath, pathComponent[i]);
-            }
-            return dstPath;
-        }
-
         [MenuItem("BuildAssetBundlesEditor/BuildAllAssetBundles")]
         public static void BuildAllAssetBundles()
         {
@@ -49,7 +39,7 @@ namespace HotFixSolution
             ClearAllAssetBundlesName();
             MarkAllAssetBundles();
             string currentDateDesc = DateTime.Now.ToString("yyyyMMdd-HHmmss");
-            String outputPath = CombinePath("Build", "AssetBundles", EditorUserBuildSettings.activeBuildTarget.ToString(), currentDateDesc);
+            String outputPath = FileUtils.CombinePath("Build", "AssetBundles", EditorUserBuildSettings.activeBuildTarget.ToString(), currentDateDesc);
             Directory.CreateDirectory(outputPath);
             BuildPipeline.BuildAssetBundles(outputPath, BuildAssetBundleOptions.UncompressedAssetBundle, EditorUserBuildSettings.activeBuildTarget);
             Application.OpenURL("file:///" + Path.GetFullPath(outputPath));
