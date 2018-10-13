@@ -1,0 +1,28 @@
+local this = {}
+
+function this.Awake(trans)
+    this.trans = trans
+    CS.UnityEngine.Debug.Log(this.trans.name .. " Awake")
+end
+
+function this.Start()
+    CS.UnityEngine.Debug.Log(this.trans.name.. " Start")
+end
+
+function this.Update()
+    -- CS.UnityEngine.Debug.Log(this.trans.name.. " Update")
+end
+
+function this.OnEnable()
+    CS.UnityEngine.Debug.Log(this.trans.name.. " OnEnable")
+end
+
+function this.OnDisable()
+    CS.UnityEngine.Debug.Log(this.trans.name.. " OnDisable")
+end
+
+function this.OnDestroy()
+    CS.UnityEngine.Debug.Log(this.trans.name.. " OnDestroy")
+end
+
+return this
