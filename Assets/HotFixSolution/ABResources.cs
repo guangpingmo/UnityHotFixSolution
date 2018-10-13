@@ -1,11 +1,13 @@
 ﻿using System;
 using UnityEngine;
+using XLua;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace HotFixSolution
 {
+    [LuaCallCSharp]
     public class ABResources
     {
         public static T Load<T>(string assetPath) where T : UnityEngine.Object

@@ -4,6 +4,7 @@ using XLua;
 
 namespace HotFixSolution
 {
+    [LuaCallCSharp]
     public class LuaVM : LuaEnv
     {
         private static LuaVM _instance;
