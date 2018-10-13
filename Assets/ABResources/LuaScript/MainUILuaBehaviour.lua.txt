@@ -1,8 +1,20 @@
 local this = {}
 
+this.trans = nil
+this.refreshDateBtn = nil
+this.dateText = nil
+
 function this.Awake(trans)
     this.trans = trans
+    print(typeof(CS.UnityEngine.UI.Button))
+    this.refreshDateBtn = this.trans:GetChildComponent("RefreshDateButton", typeof(CS.UnityEngine.UI.Button))
+    this.dateText = this.trans:GetChildComponent("DateText", typeof(CS.UnityEngine.UI.Text))
+    this.refreshDateBtn.onClick:AddListener(this.RefreshDateText)
     CS.UnityEngine.Debug.Log(this.trans.name .. " Awake")
+end
+
+function this.RefreshDateText()
+    this.dateText.text = CS.System.DateTime.Now:ToString("yyyyMMdd HH:mm:ss")
 end
 
 function this.Start()
