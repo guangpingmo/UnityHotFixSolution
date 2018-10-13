@@ -10,14 +10,15 @@ namespace HotFixSolution
 {
     public static class BuildAssetBundlesEditor
     {
-        public static readonly string assetBundleResourceFolder = "Assets/AssetBundles";
+        public static readonly string assetBundleResourceFolder = "Assets/ABResources";
 
-        [MenuItem("BuildAssetBundlesEditor/MarkAllAssetBundles")]
         public static void MarkAllAssetBundles()
         {
             var assetFiles = Directory.GetFiles(assetBundleResourceFolder, "*", SearchOption.AllDirectories);
             var assetFilesToBeAB = assetFiles.Where(f => !f.EndsWith(".meta"))
                                               .Where(f => !f.EndsWith(".cs"));
+            //make sure the path is assetPath(path are relative to the project folder, and path is sperated by "/", for example: "Assets/MyTextures/hello.png").
+            assetFilesToBeAB = assetFilesToBeAB.Select(path => path.Replace("\\", "/")); 
             Debug.LogFormat("assetFilesToBeAB:\n{0}", string.Join("\n", assetFilesToBeAB.ToArray()));
             foreach (string assetPath in assetFilesToBeAB)
             {
@@ -57,6 +58,8 @@ namespace HotFixSolution
 
         private static void BuildAssetBundlesXMLManifest(string rootPath)
         {
+            ClearAllAssetBundlesName();
+            MarkAllAssetBundles();
             ABManifest manifest = new ABManifest();
             foreach(var abName in AssetDatabase.GetAllAssetBundleNames())
             {
