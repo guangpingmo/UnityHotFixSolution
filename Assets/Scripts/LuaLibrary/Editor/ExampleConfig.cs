@@ -69,6 +69,23 @@ public static class ExampleConfig
         return false;
     }
 
+    static List<string> excludeNameSpace = new List<string> {
+        "UnityEngine.Analytics", "UnityEngine.SpatialTracking",
+        "UnityEngine.XR",
+    };
+
+    static bool isInExcludedexcludeNameSpace(Type type)
+    {
+        for (int i = 0; i < excludeNameSpace.Count; i++)
+        {
+            if (type.Namespace.StartsWith(excludeNameSpace[i]))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     [LuaCallCSharp]
     public static IEnumerable<Type> LuaCallCSharp
     {
@@ -80,6 +97,7 @@ public static class ExampleConfig
                               where type.Namespace != null && type.Namespace.StartsWith("UnityEngine") && !isExcluded(type)
                                       && type.BaseType != typeof(MulticastDelegate) && !type.IsInterface && !type.IsEnum
                               select type);
+            unityTypes = unityTypes.Where(t => !isInExcludedexcludeNameSpace(t));
 
             string[] customAssemblys = new string[] {
                 "Assembly-CSharp",
