@@ -3,11 +3,16 @@ using System.IO;
 using System.Security.Cryptography;
 using ICSharpCode.SharpZipLib.Core;
 using ICSharpCode.SharpZipLib.Zip;
+using UnityEngine;
 
 namespace HotFixSolution
 {
     public static class FileUtils
     {
+        public static string GetUnityProjectPath()
+        {
+            return Application.dataPath.Substring(0, Application.dataPath.Length - "/Assets".Length);
+        }
         public static string CombinePath(params string[] pathComponent)
         {
             string dstPath = pathComponent[0];

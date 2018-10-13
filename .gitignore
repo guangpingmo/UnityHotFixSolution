@@ -38,3 +38,6 @@ sysinfo.txt
 # XLua Generated Code
 Assets/XLua/Gen
 Assets/XLua/Gen.meta
+
+# Editor Emulate Load AssetBundle
+EditorEmulateLoadAssetBundle

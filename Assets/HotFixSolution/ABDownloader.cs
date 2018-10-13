@@ -8,27 +8,33 @@ namespace HotFixSolution
 {
     public class ABDownloader : MonoBehaviour
     {
-        private static readonly string abServerUrl = "http://localhost:8080/";
-        private static readonly string versionConfig = "versionConfig.txt";
+        public static readonly string abServerUrl = "http://localhost:8080/";
+        public static readonly string versionConfig = "versionConfig.txt";
 
 
-        private static string _DownloadZipFileRootPathh = null;
+        private static string _DownloadZipFileRootPath = null;
         private static string DownloadZipFileRootPath {
             get {
-                if(_DownloadZipFileRootPathh == null) {
-                    _DownloadZipFileRootPathh = Path.Combine(Application.persistentDataPath, "DownloadAssetBundlesZipFile");
-                    if(!Directory.Exists(_DownloadZipFileRootPathh)) {
-                        Directory.CreateDirectory(_DownloadZipFileRootPathh);
+                if(_DownloadZipFileRootPath == null) {
+                    if(Application.isEditor) {
+                        _DownloadZipFileRootPath = FileUtils.CombinePath(FileUtils.GetUnityProjectPath(),
+                                                                         "EditorEmulateLoadAssetBundle", 
+                                                                         "DownloadAssetBundlesZipFile");
+                    } else {
+                        _DownloadZipFileRootPath = Path.Combine(Application.persistentDataPath, "DownloadAssetBundlesZipFile");
+                    }
+                    if(!Directory.Exists(_DownloadZipFileRootPath)) {
+                        Directory.CreateDirectory(_DownloadZipFileRootPath);
                     }
                 }
-                return _DownloadZipFileRootPathh;
+                return _DownloadZipFileRootPath;
             }
         }
 
         private static readonly string LastestUnzipSuccFileNameKey = "LastestUnzipSuccFileName";
         private static string LastestUnzipSuccFileName {
             get {
-                return PlayerPrefs.GetString(LastestUnzipSuccFileNameKey, "");
+                return PlayerPrefs.GetString(LastestUnzipSuccFileNameKey, "-1");
             }
             set {
                 PlayerPrefs.SetString(LastestUnzipSuccFileNameKey, value);
@@ -53,7 +59,15 @@ namespace HotFixSolution
 
         public void DownloadABZipFile()
         {
-            StartCoroutine(DownloadABZipFileCo());
+            Debug.LogFormat("DownloadABZipFile. EmulateLoadAssetBundleInEditor:{0}", ABResources.EmulateLoadAssetBundleInEditor);
+            if(!Application.isEditor || ABResources.EmulateLoadAssetBundleInEditor) {
+                StartCoroutine(DownloadABZipFileCo());
+            } else {
+                if (OnSuccUnZipAB != null)
+                {
+                    OnSuccUnZipAB();
+                }
+            }
         }
 
         private IEnumerator DownloadABZipFileCo()
@@ -62,6 +76,7 @@ namespace HotFixSolution
             WWW downloadVersion = new WWW(versionUrl);
             yield return downloadVersion;
             string abZipFileName = downloadVersion.text;
+            Debug.LogFormat("DownloadABZipFileCo abZipFileName:{0}", abZipFileName);
             if(abZipFileName == LastestUnzipSuccFileName) {
                 if (OnSuccUnZipAB != null)
                 {

@@ -47,6 +47,8 @@ namespace HotFixSolution
             string zipFile = Path.Combine(Path.GetDirectoryName(outputPath), currentDateDesc + ".zip");
             FileUtils.CreateZipFile(zipFile, outputPath);
             Debug.LogFormat("Zip Folder:{0} To ZipFile:{1}", outputPath, zipFile);
+            string versionConfigFile = Path.Combine(Path.GetDirectoryName(outputPath), ABDownloader.versionConfig);
+            File.WriteAllText(versionConfigFile, currentDateDesc + ".zip");
             //FileUtils.ExtractZipFile(zipFile, outputPath+"-unzip");
         }
 
@@ -81,6 +83,20 @@ namespace HotFixSolution
         {
             Debug.LogFormat("ABManager.ABRootPath:{0}", ABManager.ABRootPath);
             Application.OpenURL("file:///" + ABManager.ABRootPath);
+        }
+
+        [MenuItem("BuildAssetBundlesEditor/EmulateLoadAssetBundleInEditor", true)]
+        public static bool EmulateLoadAssetBundleInEditorValidate()
+        {
+            Menu.SetChecked("BuildAssetBundlesEditor/EmulateLoadAssetBundleInEditor", ABResources.EmulateLoadAssetBundleInEditor);
+            return true;
+        }
+
+        [MenuItem("BuildAssetBundlesEditor/EmulateLoadAssetBundleInEditor")]
+        public static void EmulateLoadAssetBundleInEditor()
+        {           
+            ABResources.EmulateLoadAssetBundleInEditor = !ABResources.EmulateLoadAssetBundleInEditor;
+            Debug.LogFormat("EmulateLoadAssetBundleInEditor:{0}", ABResources.EmulateLoadAssetBundleInEditor);
         }
     }
 }
