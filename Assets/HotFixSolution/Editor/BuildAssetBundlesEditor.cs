@@ -25,14 +25,9 @@ namespace HotFixSolution
                 var assetImp = AssetImporter.GetAtPath(assetPath);
                 if (assetImp != null)
                 {
-                    assetImp.assetBundleName = AssetPathToAssetBundleName(assetPath);
+                    assetImp.assetBundleName = ABResources.AssetPathToAssetBundleName(assetPath);
                 }
             }
-        }
-
-        public static string AssetPathToAssetBundleName(string assetPath)
-        {
-            return assetPath.ToLower();
         }
 
         private static string CombinePath(params string[] pathComponent)
@@ -82,6 +77,13 @@ namespace HotFixSolution
             {
                 AssetDatabase.RemoveAssetBundleName(abName, true);
             }
+        }
+
+        [MenuItem("BuildAssetBundlesEditor/OpenEditorDownloadABRootPath")]
+        public static void OpenEditorDownloadABRootPath()
+        {
+            Debug.LogFormat("ABManager.ABRootPath:{0}", ABManager.ABRootPath);
+            Application.OpenURL("file:///" + ABManager.ABRootPath);
         }
     }
 }
