@@ -67,6 +67,7 @@ namespace HotFixSolution
             }
             string manifestXmlFile = Path.Combine(rootPath, ABManifest.FileName);
             manifest.Serialize(manifestXmlFile);
+            ShowABManifest(manifestXmlFile);
         }
 
         [MenuItem("BuildAssetBundlesEditor/ClearAllAssetBundlesName")]
@@ -98,5 +99,21 @@ namespace HotFixSolution
             ABResources.EmulateLoadAssetBundleInEditor = !ABResources.EmulateLoadAssetBundleInEditor;
             Debug.LogFormat("EmulateLoadAssetBundleInEditor:{0}", ABResources.EmulateLoadAssetBundleInEditor);
         }
+
+        [MenuItem("BuildAssetBundlesEditor/ClearEditorEmulateLoadAssetBundleFolder")]
+        public static void ClearEditorEmulateLoadAssetBundleFolder()
+        {
+            if(Directory.Exists(ABDownloader.DownloadZipFileRootPath)) {
+                Directory.Delete(ABDownloader.DownloadZipFileRootPath, true);
+            }
+            ABDownloader.LastestUnzipSuccFileName = "-1";
+        }
+
+        private static void ShowABManifest(string manifestFile)
+        {
+            ABManifest manifest = ABManifest.Deserialize(manifestFile);
+            Debug.LogFormat("manifestFile:{0} content:\n{1}", manifestFile, manifest.ToString());
+        }
+
     }
 }

@@ -34,6 +34,7 @@ namespace HotFixSolution
         static ABManager() {
             string manifestFile = Path.Combine(ABRootPath, ABManifest.FileName);
             if(File.Exists(manifestFile)) {
+                Debug.LogFormat("ABManager(), manifestFile:{0} content:\n{1}", manifestFile, File.ReadAllText(manifestFile));
                 ABManifest manifest = ABManifest.Deserialize(manifestFile);
                 foreach(var item in manifest.abItems) {
                     configs.Add(item.name, item);
@@ -43,6 +44,7 @@ namespace HotFixSolution
 
         public static AssetBundle LoadAssetBundle(string abName)
         {
+            Debug.LogFormat("ABManager.LoadAssetBundleabName:{0}", abName);
             if(loadedAB.ContainsKey(abName)) {
                 return loadedAB[abName];
             }
@@ -52,7 +54,7 @@ namespace HotFixSolution
             ABItem abItemConfig = configs[abName];
             string abFile = Path.Combine(ABRootPath, abItemConfig.name);
             AssetBundle assetBundle = AssetBundle.LoadFromFile(abFile);
-            Debug.LogFormat("ABManager.LoadAssetBundle abName:{0} File:{1}", abName, abFile);
+            Debug.LogFormat("ABManager.LoadAssetBundle real abName:{0} File:{1}", abName, abFile);
             loadedAB[abName] = assetBundle;
             foreach(var dependABName in abItemConfig.dependencies)
             {

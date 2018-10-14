@@ -13,7 +13,7 @@ namespace HotFixSolution
 
 
         private static string _DownloadZipFileRootPath = null;
-        private static string DownloadZipFileRootPath {
+        public static string DownloadZipFileRootPath {
             get {
                 if(_DownloadZipFileRootPath == null) {
                     if(Application.isEditor) {
@@ -32,7 +32,7 @@ namespace HotFixSolution
         }
 
         private static readonly string LastestUnzipSuccFileNameKey = "LastestUnzipSuccFileName";
-        private static string LastestUnzipSuccFileName {
+        public static string LastestUnzipSuccFileName {
             get {
                 return PlayerPrefs.GetString(LastestUnzipSuccFileNameKey, "-1");
             }

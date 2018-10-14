@@ -24,11 +24,13 @@ public class UpdateUI : MonoBehaviour {
 
     private void OnUnZipAB()
     {
+        downloadSlider.value = 1f;
         tip.text = "正在解压资源包，请稍等！";
     }
 
     private void OnSuccUnZipAB()
     {
+        downloadSlider.value = 1f;
         tip.text = "解压资源包成功！游戏开始！";
         LuaVM.Instance.RunScript("Assets/ABResources/LuaScript/Entry.lua.txt");
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;
 using System.IO;
+using System;
 
 namespace HotFixSolution
 {
@@ -13,20 +14,29 @@ namespace HotFixSolution
 
         public void Serialize(string fileName)
         {
-            using(TextWriter tw = new StreamWriter(fileName))
+            using(Stream sr = File.Create(fileName))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(ABManifest));
-                serializer.Serialize(tw, this);
+                serializer.Serialize(sr, this);
             }
         }
 
         public static ABManifest Deserialize(string fileName)
         {
-            using(TextReader tr = new StringReader(fileName))
+            using(Stream sr = File.OpenRead(fileName))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(ABManifest));
-                ABManifest manifest = (ABManifest)serializer.Deserialize(tr);
+                ABManifest manifest = (ABManifest)serializer.Deserialize(sr);
                 return manifest;
+            }
+        }
+
+        public override string ToString()
+        {
+            using(MemoryStream ms = new MemoryStream()) {
+                XmlSerializer serializer = new XmlSerializer(typeof(ABManifest));
+                serializer.Serialize(ms, this);
+                return System.Text.Encoding.UTF8.GetString(ms.ToArray());
             }
         }
     }

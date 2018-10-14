@@ -1,1 +1,2 @@
 print("Start Game!");
+CS.UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
