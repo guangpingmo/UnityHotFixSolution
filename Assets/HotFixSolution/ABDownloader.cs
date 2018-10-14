@@ -16,7 +16,7 @@ namespace HotFixSolution
         public static string DownloadZipFileRootPath {
             get {
                 if(_DownloadZipFileRootPath == null) {
-                    if(Application.isEditor) {
+                    if(Application.isEditor && ABResources.EmulateLoadAssetBundleInEditor) {
                         _DownloadZipFileRootPath = FileUtils.CombinePath(FileUtils.GetUnityProjectPath(),
                                                                          "EditorEmulateLoadAssetBundle", 
                                                                          "DownloadAssetBundlesZipFile");

@@ -14,6 +14,8 @@ function this.Awake(trans)
     CS.UnityEngine.Debug.Log(this.trans.name .. " Awake")
     local prefab = CS.HotFixSolution.ABResources.Load("Assets/ABResources/Prefabs/Env.prefab", typeof(GameObject));
     GameObject.Instantiate(prefab);
+    this.sceneNameText = this.trans:Find("SceneName"):GetComponent("Text")
+    this.sceneNameText.text = CS.HotFixSolution.ABManager.ABRootPath
 end
 
 function this.RefreshDateText()

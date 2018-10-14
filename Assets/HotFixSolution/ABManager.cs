@@ -16,7 +16,7 @@ namespace HotFixSolution
         public static string ABRootPath {
             get {
                 if(_ABRootPath == null) {
-                    if(Application.isEditor) {
+                    if(Application.isEditor && ABResources.EmulateLoadAssetBundleInEditor) {
                         _ABRootPath = FileUtils.CombinePath(FileUtils.GetUnityProjectPath(),
                                                             "EditorEmulateLoadAssetBundle", 
                                                             "AssetBundles");
