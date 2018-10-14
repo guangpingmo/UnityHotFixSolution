@@ -4,12 +4,16 @@ this.trans = nil
 this.refreshDateBtn = nil
 this.dateText = nil
 
+local GameObject = CS.UnityEngine.GameObject
+
 function this.Awake(trans)
     this.trans = trans
     this.refreshDateBtn = this.trans:Find("RefreshDateButton"):GetComponent("Button")
     this.dateText = this.trans:Find("DateText"):GetComponent("Text")
     this.refreshDateBtn.onClick:AddListener(this.RefreshDateText)
     CS.UnityEngine.Debug.Log(this.trans.name .. " Awake")
+    local prefab = CS.HotFixSolution.ABResources.Load("Assets/ABResources/Prefabs/Env.prefab", typeof(GameObject));
+    GameObject.Instantiate(prefab);
 end
 
 function this.RefreshDateText()
